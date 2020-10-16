@@ -35,10 +35,6 @@ class HelloAPIView(APIView):
 		return Response({'method': 'DELETE'})
 
 class EmpresaAPIView(APIView):
-	# def get(self, request):
-	# 	empresas=Empresa.objects.all()
-	# 	data=EmpresaSerializer(empresas, many=True).data
-	# 	return Response(data)
 	def get(self, request, format=None):
 		empresas=Empresa.objects.all()
 		data=EmpresaSerializer(empresas, many=True).data

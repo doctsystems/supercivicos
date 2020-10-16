@@ -14,7 +14,7 @@ class Direccion(ModeloBase):
 		verbose_name_plural="Direcciones"
 
 	def __str__(self):
-		return '{}'.format(self.calle)
+		return '{}, {}, {}'.format(self.calle, self.ciudad, self.pais)
 
 	def save(self):
 		self.calle=self.calle.upper()
@@ -28,7 +28,7 @@ class Empresa(ModeloBase):
 	email=models.EmailField(max_length=50, unique=True)
 	telefono=models.CharField(max_length=10)
 	contrasenia=models.CharField(max_length=50)
-	direccion=models.OneToOneField(Direccion, on_delete=models.CASCADE)
+	direccion=models.OneToOneField(Direccion, related_name='direccion', on_delete=models.CASCADE)
 
 	class Meta:
 		ordering = ['nombre']
@@ -43,7 +43,7 @@ class Empresa(ModeloBase):
 		super(Empresa, self).save()
 
 class Responsable(ModeloBase):
-	empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+	empresa=models.ForeignKey(Empresa, related_name='responsables', on_delete=models.CASCADE)
 	nombres=models.CharField(max_length=50)
 	apellidos=models.CharField(max_length=10)
 	celular=models.CharField(max_length=10)

@@ -8,7 +8,7 @@ class ResponsableSerializer(serializers.ModelSerializer):
 		fields='__all__'
 
 	def create(self, validated_data):
-		responsable=Responsable(nombre=validated_data.get("nombres"))
+		responsable=Responsable(nombres=validated_data.get("nombres"))
 		responsable.save()
 		return validated_data
 
@@ -19,7 +19,7 @@ class DireccionSerializer(serializers.ModelSerializer):
 		fields='__all__'
 
 	def create(self, validated_data):
-		direccion=Direccion(nombre=validated_data.get("calle"))
+		direccion=Direccion(calle=validated_data.get("calle"))
 		direccion.save()
 		return validated_data
 

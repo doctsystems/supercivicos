@@ -16,12 +16,12 @@ class Direccion(ModeloBase):
 	def __str__(self):
 		return '{}, {}, {}'.format(self.calle, self.ciudad, self.pais)
 
-	def save(self):
+	def save(self, *args, **kwargs):
 		self.calle=self.calle.upper()
 		self.colonia=self.colonia.upper()
 		self.ciudad=self.ciudad.upper()
 		self.pais=self.pais.upper()
-		super(Direccion, self).save()
+		super(Direccion, self).save(*args, **kwargs)
 
 class Empresa(ModeloBase):
 	nombre=models.CharField(max_length=30, unique=True)
@@ -38,9 +38,9 @@ class Empresa(ModeloBase):
 	def __str__(self):
 		return '{}'.format(self.nombre)
 
-	def save(self):
+	def save(self, *args, **kwargs):
 		self.nombre=self.nombre.upper()
-		super(Empresa, self).save()
+		super(Empresa, self).save(*args, **kwargs)
 
 class Responsable(ModeloBase):
 	empresa=models.ForeignKey(Empresa, related_name='responsables', on_delete=models.CASCADE)
@@ -55,7 +55,7 @@ class Responsable(ModeloBase):
 	def __str__(self):
 		return '{} {}'.format(self.nombres, self.apellidos)
 
-	def save(self):
+	def save(self, *args, **kwargs):
 		self.nombres=self.nombres.upper()
 		self.apellidos=self.apellidos.upper()
-		super(Responsable, self).save()
+		super(Responsable, self).save(*args, **kwargs)

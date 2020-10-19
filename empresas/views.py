@@ -5,8 +5,9 @@ from rest_framework import status
 
 from empresas.models import *
 from empresas.serializers import *
+from empresas.utils import *
 
-class apiOverview(APIView):
+class ApiHome(APIView):
 
 	def get(self, request, format=None):
 		api_urls = {
@@ -62,19 +63,45 @@ class ResponsableAPIView(APIView):
 		else:
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-from rest_framework.decorators import api_view
-@api_view(['GET'])
-def EmpresaList(request):
-	empresas = Empresa.objects.all()
-	serializer = EmpresaSerializer(empresas, many=True).data
+from django.urls import reverse
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.sites.shortcuts import get_current_site
+class RegisterView(APIView):
+	serializer_class = EmpresaSerializer
 
-	return Response(serializer)
-
-@api_view(['POST'])
-def EmpresaCreate(request):
-	serializer = EmpresaSerializer(data=request.data)
-
-	if serializer.is_valid():
+	def post(self, request):
+		empresa = request.data
+		serializer = self.serializer_class(data=empresa)
+		serializer.is_valid(raise_exception=True)
 		serializer.save()
+		empresa_data = serializer.data
+		empresa = Empresa.objects.get(email=empresa_data['email'])
+		token = RefreshToken.for_user(empresa).access_token
+		current_site = get_current_site(request).domain
+		relativeLink = reverse('empresas:email-verify')
+		absurl = 'http://'+current_site+relativeLink+"?token="+str(token)
+		email_body = 'Hi '+empresa.nombre + \
+		    ' Use the link below to verify your email \n' + absurl
+		data = {'email_body': email_body, 'to_email': empresa.email,
+		        'email_subject': 'Verify your email'}
 
-	return Response(serializer.data)
+		Util.send_email(data)
+		return Response(empresa_data, status=status.HTTP_201_CREATED)
+
+import jwt
+from django.conf import settings
+class VerifyEmail(APIView):
+
+	def get(self, request):
+		token = request.GET.get('token')
+		try:
+			payload = jwt.decode(token, settings.SECRET_KEY)
+			empresa = Empresa.objects.get(id=payload['user_id'])
+			if not empresa.is_verified:
+				empresa.is_verified = True
+				empresa.save()
+			return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
+		except jwt.ExpiredSignatureError as identifier:
+			return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
+		except jwt.exceptions.DecodeError as identifier:
+			return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)

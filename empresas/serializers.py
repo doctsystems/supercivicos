@@ -13,11 +13,6 @@ class DireccionSerializer(serializers.ModelSerializer):
 		model=Direccion
 		fields='__all__'
 
-	# def create(self, validated_data):
-	# 	direccion=Direccion(calle=validated_data.get("calle"))
-	# 	direccion.save()
-	# 	return validated_data
-
 class EmpresaSerializer(serializers.ModelSerializer):
 	# direccion=serializers.StringRelatedField()
 	# responsables = ResponsableSerializer(many=True)
@@ -28,6 +23,7 @@ class EmpresaSerializer(serializers.ModelSerializer):
 	class Meta:
 		model=Empresa
 		fields='__all__'
+		read_only_fields = ['is_verified',]
 
 	# def create(self, validated_data):
 	# 	empresa=Empresa(nombre=validated_data.get("nombre"))
@@ -36,3 +32,10 @@ class EmpresaSerializer(serializers.ModelSerializer):
 	# 	for responsable in responsables:
 	# 		Responsable.objects.create(empresa=empresa, **responsable)
 	# 	return validated_data
+
+class EmailVerificationSerializer(serializers.ModelSerializer):
+	token = serializers.CharField(max_length=555)
+
+	class Meta:
+		model = Empresa
+		fields = ['token']

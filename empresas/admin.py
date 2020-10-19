@@ -9,6 +9,10 @@ class DireccionAdmin(admin.ModelAdmin):
 	list_display = ('id', 'calle', 'colonia', 'ciudad', 'pais') 
 	# search_fields = ('nombre',)
 
+class ResponsableAdmin(admin.ModelAdmin):
+	list_display = ('id', 'nombres', 'apellidos', 'celular') 
+	# search_fields = ('nombre',)
+
 admin.site.register(Direccion, DireccionAdmin)
 admin.site.register(Empresa, EmpresaAdmin)
-admin.site.register(Responsable)
+admin.site.register(Responsable, ResponsableAdmin)

@@ -6,9 +6,10 @@ class Empresa(ModeloBase):
 	email=models.EmailField(max_length=50, unique=True)
 	telefono=models.CharField(max_length=10)
 	contrasenia=models.CharField(max_length=50)
+	is_verified = models.BooleanField(default=False)
 	
 	class Meta:
-		ordering = ['nombre']
+		ordering = ['-id']
 		verbose_name = "Empresa"
 		verbose_name_plural = "Empresas"
 

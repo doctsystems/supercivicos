@@ -1,8 +1,11 @@
 from django.urls import path
-from empresas.views import EmpresaAPIView, DireccionAPIView, ResponsableAPIView
+from empresas.views import *
 
 urlpatterns = [
-	path('', EmpresaAPIView.as_view(), name='home'),
-	path('direcciones/', DireccionAPIView.as_view(), name='dirs'),
-	path('responsables/', ResponsableAPIView.as_view(), name='resp'),
+	path('', apiOverview.as_view(), name="api"),
+	path('list/', EmpresaList, name='list'),
+	path('create/', EmpresaCreate, name='create'),
+	path('empresas/', EmpresaAPIView.as_view(), name='empresas'),
+	path('direcciones/', DireccionAPIView.as_view(), name='direcciones'),
+	path('responsables/', ResponsableAPIView.as_view(), name='responsables'),
 ]

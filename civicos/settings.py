@@ -56,10 +56,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'civicos.wsgi.application'
 
+# DATABASES = {
+#     'default': config('DATABASE_URL', cast=db_url),
+# }
+# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 DATABASES = {
-    'default': config('DATABASE_URL', cast=db_url),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

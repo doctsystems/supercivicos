@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     # Other apps
     'rest_framework',
     # 'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -33,7 +34,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Other middleware
     'django_userforeignkey.middleware.UserForeignKeyMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'civicos.urls'
@@ -116,3 +120,13 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'localhost:4200',
+    '127.0.0.1:4200'
+]
+# CORS_ORIGIN_WHITELIST = [
+#     'localhost:4200',
+#     '127.0.0.1:4200'
+# ]
+# CORS_ORIGIN_ALLOW_ALL = True

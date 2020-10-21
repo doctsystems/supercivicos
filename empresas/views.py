@@ -15,7 +15,6 @@ class ApiHome(APIView):
 			'Empresas':'/api/empresas',
 			'Direcciones':'/api/direcciones/',
 			'Responsables':'/api/responsables/',
-
 			'Registro de Empresas':'/api/register/',
 			'Verificacion de email':'/api/email-verify/',
 		}

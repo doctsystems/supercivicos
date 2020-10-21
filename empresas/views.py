@@ -27,13 +27,13 @@ class EmpresaAPIView(APIView):
 		data=EmpresaSerializer(empresas, many=True).data
 		return Response(data)
 
-	def post(self, request, format=None):
-		serializer=EmpresaSerializer(data=request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		else:
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	# def post(self, request, format=None):
+	# 	serializer=EmpresaSerializer(data=request.data)
+	# 	if serializer.is_valid():
+	# 		serializer.save()
+	# 		return Response(serializer.data, status=status.HTTP_201_CREATED)
+	# 	else:
+	# 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DireccionAPIView(APIView):
 	

@@ -64,16 +64,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'civicos.wsgi.application'
 
-# DATABASES = {
-#     'default': config('DATABASE_URL', cast=db_url),
-# }
-# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': config('DATABASE_URL', cast=db_url),
 }
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -101,7 +101,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "static",
+STATIC_ROOT = BASE_DIR / "staticfiles",
 
 # STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 # STATICFILES_DIRS = (

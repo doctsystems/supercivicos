@@ -67,7 +67,7 @@ WSGI_APPLICATION = 'civicos.wsgi.application'
 DATABASES = {
     'default': config('DATABASE_URL', cast=db_url),
 }
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

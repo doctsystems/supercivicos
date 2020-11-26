@@ -8,7 +8,7 @@ urlpatterns = [
 	path('direcciones/', DireccionAPIView.as_view(), name='direcciones'),
 	path('responsables/', ResponsableAPIView.as_view(), name='responsables'),
 
-	path('register/', RegisterView.as_view(), name="register"),
-	path('email-verify/', VerifyEmail.as_view(), name="email-verify"),
-	path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+	path('registro-empresas/', RegistroEmpresaView.as_view(), name="registro-empresas"),
+	path('verificar-email/', VerificarEmail.as_view(), name="verificar-email"),
+	path('token-refresh/', TokenRefreshView.as_view(), name='token-refresh'),
 ]

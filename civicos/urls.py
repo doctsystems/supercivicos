@@ -5,6 +5,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('', include(('core.urls', 'core'), namespace='core')),
 	path('api/', include(('empresas.urls', 'empresas'), namespace='empresas')),
+	# path('auth/', include(('authentication.urls', 'auth'), namespace='auth')),
 ]
 
 from django.conf import settings

@@ -11,6 +11,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
+# AUTH_USER_MODEL = 'authentication.User'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -21,6 +23,7 @@ INSTALLED_APPS = [
     # My apps
     'core',
     'empresas',
+    # 'authentication',
     # Other apps
     'rest_framework',
     # 'rest_framework.authtoken',
@@ -64,16 +67,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'civicos.wsgi.application'
 
-DATABASES = {
-    'default': config('DATABASE_URL', cast=db_url),
-}
-DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     'default': config('DATABASE_URL', cast=db_url),
 # }
+# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {

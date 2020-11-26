@@ -15,8 +15,8 @@ class ApiHome(APIView):
 			'Empresas':'/api/empresas',
 			'Direcciones':'/api/direcciones/',
 			'Responsables':'/api/responsables/',
-			'Registro de Empresas':'/api/register/',
-			'Verificacion de email':'/api/email-verify/',
+			'Registro de Empresas':'/api/registro-empresas/',
+			'Verificacion de email':'/api/verificar-email/',
 		}
 		return Response(api_urls)
 
@@ -53,8 +53,8 @@ class DireccionAPIView(APIView):
 class ResponsableAPIView(APIView):
 	
 	def get(self, request, format=None):
-		resps=Responsable.objects.all()
-		data=ResponsableSerializer(resps, many=True).data
+		responsables=Responsable.objects.all()
+		data=ResponsableSerializer(responsables, many=True).data
 		return Response(data)
 
 	def post(self, request, format=None):
@@ -68,11 +68,30 @@ class ResponsableAPIView(APIView):
 from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.sites.shortcuts import get_current_site
-class RegisterView(APIView):
+from django.contrib.auth.hashers import make_password
+from django.http import QueryDict
+
+class RegistroEmpresaView(APIView):
 	serializer_class = EmpresaSerializer
 
 	def post(self, request):
-		empresa = request.data
+		# print('****************')
+		# print(request.data)
+		qdict = QueryDict('', mutable=True)
+		qdict.update(request.data)
+		# print('****************')
+		# print(qdict['password'])
+
+		# request.data._mutable = True
+		# request.data['password'] = make_password(request.data['password'])
+		# request.data._mutable = False
+
+		qdict['password'] = make_password(qdict['password'])
+		print('****************')
+		print(qdict)
+
+		# empresa = request.data
+		empresa = qdict
 		serializer = self.serializer_class(data=empresa)
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
@@ -80,19 +99,20 @@ class RegisterView(APIView):
 		empresa = Empresa.objects.get(email=empresa_data['email'])
 		token = RefreshToken.for_user(empresa).access_token
 		current_site = get_current_site(request).domain
-		relativeLink = reverse('empresas:email-verify')
+		relativeLink = reverse('empresas:verificar-email')
 		absurl = 'http://'+current_site+relativeLink+"?token="+str(token)
 		email_body = 'Hi '+empresa.nombre + \
 		    ' Use the link below to verify your email \n' + absurl
 		data = {'email_body': email_body, 'to_email': empresa.email,
 		        'email_subject': 'Verify your email'}
 
+		print(absurl)
 		Util.send_email(data)
 		return Response(empresa_data, status=status.HTTP_201_CREATED)
 
 import jwt
 from django.conf import settings
-class VerifyEmail(APIView):
+class VerificarEmail(APIView):
 
 	def get(self, request):
 		token = request.GET.get('token')
@@ -102,8 +122,8 @@ class VerifyEmail(APIView):
 			if not empresa.is_verified:
 				empresa.is_verified = True
 				empresa.save()
-			return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
+			return Response({'email': 'Activado correctamente.'}, status=status.HTTP_200_OK)
 		except jwt.ExpiredSignatureError as identifier:
-			return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
+			return Response({'error': 'Codigo de activacion expirado'}, status=status.HTTP_400_BAD_REQUEST)
 		except jwt.exceptions.DecodeError as identifier:
-			return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+			return Response({'error': 'Token invalido'}, status=status.HTTP_400_BAD_REQUEST)

@@ -10,7 +10,7 @@ class DireccionAdmin(admin.ModelAdmin):
 	# search_fields = ('nombre',)
 
 class ResponsableAdmin(admin.ModelAdmin):
-	list_display = ('id', 'nombres', 'apellidos', 'celular') 
+	list_display = ('id', 'nombres', 'apellidos', 'telefono') 
 	# search_fields = ('nombre',)
 
 admin.site.register(Direccion, DireccionAdmin)

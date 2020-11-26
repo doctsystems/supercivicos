@@ -1,16 +1,25 @@
 from django.db import models
 from core.models import ModeloBase
+from stdimage import StdImageField
 
 class Empresa(ModeloBase):
+	tipos=(
+		('nn', '----------'),
+		('pri', 'Empresa Privada'),
+		('gob', 'Institucion de Gobierno'),
+	)
+	tipo_de_empresa = models.CharField(max_length=3, choices=tipos, default='nn')
 	nombre=models.CharField(max_length=30, unique=True)
 	email=models.EmailField(max_length=50, unique=True)
 	telefono=models.CharField(max_length=10)
-	contrasenia=models.CharField(max_length=50)
+	password=models.CharField(max_length=80)
+	logo=StdImageField(upload_to='empresas/logo/',
+		variations={'thumbnail': {"width": 240, "height": 200, "crop": True}},
+		null=True, blank=True)
 	is_verified = models.BooleanField(default=False)
 	
 	class Meta:
 		ordering = ['-id']
-		verbose_name = "Empresa"
 		verbose_name_plural = "Empresas"
 
 	def __str__(self):
@@ -24,7 +33,7 @@ class Responsable(ModeloBase):
 	empresa=models.ForeignKey(Empresa, related_name='responsables', on_delete=models.CASCADE)
 	nombres=models.CharField(max_length=50)
 	apellidos=models.CharField(max_length=50)
-	celular=models.CharField(max_length=10)
+	telefono=models.CharField(max_length=10)
 
 	class Meta:
 		ordering = ['apellidos']
@@ -46,7 +55,7 @@ class Direccion(ModeloBase):
 	colonia=models.CharField(max_length=30)
 	ciudad=models.CharField(max_length=20)
 	pais=models.CharField(max_length=20)
-	cp=models.CharField(max_length=50)
+	codigo_postal=models.CharField(max_length=50)
 
 	class Meta:
 		verbose_name_plural="Direcciones"

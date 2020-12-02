@@ -16,6 +16,7 @@ class Empresa(ModeloBase):
 	logo=StdImageField(upload_to='empresas/logo/',
 		variations={'thumbnail': {"width": 240, "height": 200, "crop": True}},
 		null=True, blank=True)
+	# logo=models.ImageField(upload_to='empresas/logo64/', null=True, blank=True)
 	is_verified = models.BooleanField(default=False)
 	
 	class Meta:

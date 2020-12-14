@@ -27,14 +27,6 @@ class EmpresaAPIView(APIView):
 		data=EmpresaSerializer(empresas, many=True).data
 		return Response(data)
 
-	# def post(self, request, format=None):
-	# 	serializer=EmpresaSerializer(data=request.data)
-	# 	if serializer.is_valid():
-	# 		serializer.save()
-	# 		return Response(serializer.data, status=status.HTTP_201_CREATED)
-	# 	else:
-	# 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class DireccionAPIView(APIView):
 	
 	def get(self, request, format=None):
@@ -75,23 +67,12 @@ class RegistroEmpresaView(APIView):
 	serializer_class = EmpresaSerializer
 
 	def post(self, request):
-		# print('****************')
-		# print(request.data)
-		qdict = QueryDict('', mutable=True)
-		qdict.update(request.data)
-		# print('****************')
-		# print(qdict['password'])
+		# qdict = QueryDict('', mutable=True)
+		# qdict.update(request.data)
+		# qdict['password'] = make_password(qdict['password'])
+		# empresa = qdict
 
-		# request.data._mutable = True
-		# request.data['password'] = make_password(request.data['password'])
-		# request.data._mutable = False
-
-		qdict['password'] = make_password(qdict['password'])
-		print('****************')
-		print(qdict)
-
-		# empresa = request.data
-		empresa = qdict
+		empresa = request.data
 		serializer = self.serializer_class(data=empresa)
 		serializer.is_valid(raise_exception=True)
 		serializer.save()

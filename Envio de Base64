@@ -1,0 +1,50 @@
+Nu3v0S3rv3rVPS
+
+
+Samples of send geojson
+
+{
+    "name": "asdf",
+    "county": "qwer",
+    "enrollment": 333,
+    "location": "POINT (11.492324113 42.890307434)",
+    "electricity_availability": true,
+    "emmis_code": 444
+}
+
+<QueryDict: {
+	'csrfmiddlewaretoken': ['8XfDCTEY9FE9joB0XSM7aijj8tgqqZoFTsmmbd1OkJn49BpJxs3iE4SA41HUnwfH'], 
+	'name': ['oct'], 
+	'county': ['octcoun'], 
+	'enrollment': ['666'], 
+	'location': ['POINT (12.492324113 41.890307434)'], 
+	'emmis_code': ['666']
+}>
+
+{
+	'name': 'asdf', 
+	'county': 'qwer', 
+	'enrollment': 333, 
+	'location': 'POINT (11.492324113 42.890307434)', 
+	'electricity_availability': True, 
+	'emmis_code': 444
+}
+
+Send json for reporte
+
+<QueryDict: {
+'csrfmiddlewaretoken': ['1m0QuFJ9QFvTAa1VgALKoTgGltKASdTEQ8PEkHV99IQS26kCu72AnrzV4zPiKCUF'], 
+'usuario': ['2'], 
+'categoriaId': ['2'], 
+'descripcion': ['Algo raro esta pasando en esta ciudad'], 
+'location': ['POINT (11.492324113 42.890307434)'], 
+'video2': [<TemporaryUploadedFile: VID-20200609-WA0092.mp4 (video/mp4)>]
+}>
+
+{
+    "usuario": 2,
+    "categoriaId": 2,
+    "video2": "data:video/mp4;base64,AAAAGGZ0eXBtcDQyAAAAAGlzb21tcDQyAAAAGGJl",
+    "descripcion": "enviando video por base64",
+    "location": "POINT (11.492324113 42.890307434)"
+}

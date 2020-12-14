@@ -18,7 +18,7 @@ class DireccionSerializer(serializers.ModelSerializer):
 class EmpresaSerializer(serializers.ModelSerializer):
 	direcciones = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	responsables = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-	password = serializers.CharField(max_length=80, min_length=6, write_only=True)
+	# password = serializers.CharField(max_length=80, min_length=6, write_only=True)
 	logo=Base64ImageField(required=False)
 
 	class Meta:

@@ -10,9 +10,9 @@ class Empresa(ModeloBase):
 	)
 	tipo_de_empresa = models.CharField(max_length=3, choices=tipos, default='nn')
 	nombre=models.CharField(max_length=30, unique=True)
-	email=models.EmailField(max_length=50, unique=True)
 	telefono=models.CharField(max_length=10)
-	password=models.CharField(max_length=80)
+	# email=models.EmailField(max_length=50, unique=True)
+	# password=models.CharField(max_length=80)
 	logo=StdImageField(upload_to='empresas/logo/',
 		variations={'thumbnail': {"width": 240, "height": 200, "crop": True}},
 		null=True, blank=True)

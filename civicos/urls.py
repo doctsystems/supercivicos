@@ -3,10 +3,18 @@ from django.urls import path, include
 from django.conf.urls import url
 from allauth.account.views import confirm_email
 
+from reportes.views import ReporteViewSet
+from rest_framework import routers
+router = routers.DefaultRouter()
+# En el router vamos añadiendo los endpoints a los viewsets
+router.register('reportes', ReporteViewSet)
+
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('', include(('core.urls', 'core'), namespace='core')),
+	path('api/', include(router.urls)),
 	path('api/', include(('empresas.urls', 'empresas'), namespace='empresas')),
+	# path('api/', include(('reportes.urls', 'reportes'), namespace='reportes')),
 ]
 
 urlpatterns += [

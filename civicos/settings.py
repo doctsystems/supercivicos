@@ -22,7 +22,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.gis',
+    'leaflet',
+
     'rest_framework',
+    'rest_framework_gis',
     'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
@@ -33,6 +37,9 @@ INSTALLED_APPS = [
     # My apps
     'core',
     'empresas',
+    'reportes',
+    'videos',
+    
     # 'authentication',
 
     # Other apps
@@ -77,10 +84,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'civicos.wsgi.application'
 
+# DATABASES = {
+#     'default': config('DATABASE_URL', cast=db_url),
+# }
+# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
 DATABASES = {
-    'default': config('DATABASE_URL', cast=db_url),
+    'default': config('DATABASE_URL1', cast=db_url),
 }
-DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'civicos',
+#         'USER': 'postgres',
+#         'PASSWORD': 'diego1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -130,6 +154,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,
 
     # For Simple JWT
     'DEFAULT_AUTHENTICATION_CLASSES': (

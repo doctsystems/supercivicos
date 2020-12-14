@@ -2,7 +2,7 @@ from django.contrib import admin
 from empresas.models import Direccion, Empresa, Responsable
 
 class EmpresaAdmin(admin.ModelAdmin):
-	list_display = ('id', 'nombre', 'email', 'telefono') 
+	list_display = ('id', 'nombre', 'telefono') 
 	# search_fields = ('nombre',)
 
 class DireccionAdmin(admin.ModelAdmin):

@@ -14,6 +14,14 @@ urlpatterns = [
 	path('api/', include(('comments.urls', 'comments'), namespace='comments')),
 	path('api/', include(('rate.urls', 'rate'), namespace='rate')),
 	path('api/', include(('stickers.urls', 'stickers'), namespace='stickers')),
+
+	# path('api/', include(('reportes.urls', 'reportes'), namespace='reportes')),
+	path('', include('rate.urls')),
+	path('', include('comments.urls')),
+	path('', include('stickers.urls')),
+        #Login
+	path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+	path('authentication/', include('login.urls')),
 ]
 
 urlpatterns += [

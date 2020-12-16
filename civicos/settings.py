@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
 
-
     # My apps
     'core',
     'empresas',
@@ -43,12 +42,11 @@ INSTALLED_APPS = [
     'rate',
     'comments',
     'stickers',
-    
-    # 'authentication',
+    'login',
 
     # Other apps
-    # 'oauth2_provider',
     'corsheaders',
+    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +55,8 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #OAuth2
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -88,10 +88,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'civicos.wsgi.application'
 
-# DATABASES = {
-#     'default': config('DATABASE_URL', cast=db_url),
-# }
-# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 DATABASES = {
     # 'default': config('DATABASE_URL1', cast=db_url),
@@ -100,11 +96,16 @@ DATABASES = {
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     'default': config('DATABASE_URL', cast=db_url),
 # }
+# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -154,7 +155,13 @@ REST_FRAMEWORK = {
     # For Simple JWT
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+        #The lines below were added for manage the login
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',
+        ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 
     # For Django OAuth Toolkit
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -165,6 +172,12 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # )
 }
+
+AUTHENTICATION_BACKENDS = (
+    #To keep the Browsable API
+    'django.contrib.auth.backends.ModelBackend',
+    'oauth2_provider.backends.OAuth2Backend',
+)
 
 # Config for Django-Allauth
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

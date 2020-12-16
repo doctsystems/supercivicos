@@ -34,6 +34,9 @@ class ApiHome(APIView):
 			'Stickers List':'/api/stickers/list',
 			'Stickers Create':'/api/stickers/create',
 			'Stickers Detail-Update':'/api/stickers/<int:pk>/edit/',
+                        
+                        'Send the authentication PIN to an email': '/authentication/getpin',
+                        'Get the access token with the PIN': '/authentication/token',
 		}
 		return Response(api_urls)
 
@@ -82,3 +85,4 @@ class VerificarEmail(APIView):
 			return Response({'error': 'Codigo de activacion expirado'}, status=status.HTTP_400_BAD_REQUEST)
 		except jwt.exceptions.DecodeError as identifier:
 			return Response({'error': 'Token invalido'}, status=status.HTTP_400_BAD_REQUEST)
+

@@ -46,5 +46,5 @@ Send json for reporte
     "categoriaId": 2,
     "video2": "data:video/mp4;base64,AAAAGGZ0eXBtcDQyAAAAAGlzb21tcDQyAAAAGGJl",
     "descripcion": "enviando video por base64",
-    "location": "POINT (11.492324113 42.890307434)"
+    "location": "POINT(-102.300224 21.887146)"
 }

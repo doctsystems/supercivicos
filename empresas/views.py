@@ -12,68 +12,29 @@ class ApiHome(APIView):
 	def get(self, request, format=None):
 		api_urls = {
 			'Api':'/api/',
-			'Empresas':'/api/empresas',
-			'Direcciones':'/api/direcciones/',
-			'Responsables':'/api/responsables/',
-			'Registro de Empresas':'/api/registro-empresas/',
+
+			'Empresa List':'/api/empresas/list',
+			'Empresa Create':'/api/empresas/create',
+			'Empresa Detail-Update':'/api/empresas/<int:pk>/edit/',
+
 			'Verificacion de email':'/api/verificar-email/',
+
+			'Reportes List':'/api/reportes/list',
+			'Reportes Create':'/api/reportes/create',
+			'Reportes Detail-Update':'/api/reportes/<int:pk>/edit/',
 		}
 		return Response(api_urls)
 
-class EmpresaAPIView(APIView):
-
-	def get(self, request, format=None):
-		empresas=Empresa.objects.all()
-		data=EmpresaSerializer(empresas, many=True).data
-		return Response(data)
-
-class DireccionAPIView(APIView):
-	
-	def get(self, request, format=None):
-		dirs=Direccion.objects.all()
-		data=DireccionSerializer(dirs, many=True).data
-		return Response(data)
-
-	def post(self, request, format=None):
-		serializer=DireccionSerializer(data=request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		else:
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class ResponsableAPIView(APIView):
-	
-	def get(self, request, format=None):
-		responsables=Responsable.objects.all()
-		data=ResponsableSerializer(responsables, many=True).data
-		return Response(data)
-
-	def post(self, request, format=None):
-		serializer=ResponsableSerializer(data=request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		else:
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+from rest_framework import viewsets
 from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth.hashers import make_password
-from django.http import QueryDict
-
-class RegistroEmpresaView(APIView):
+class EmpresaViewSet(viewsets.ModelViewSet):
+	queryset = Empresa.objects.filter(is_verified=True)
 	serializer_class = EmpresaSerializer
 
-	def post(self, request):
-		# qdict = QueryDict('', mutable=True)
-		# qdict.update(request.data)
-		# qdict['password'] = make_password(qdict['password'])
-		# empresa = qdict
-
-		empresa = request.data
-		serializer = self.serializer_class(data=empresa)
+	def create(self, request, *args, **kwargs):
+		serializer = self.serializer_class(data=request.data)
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
 		empresa_data = serializer.data
@@ -89,6 +50,7 @@ class RegistroEmpresaView(APIView):
 
 		print(absurl)
 		Util.send_email(data)
+
 		return Response(empresa_data, status=status.HTTP_201_CREATED)
 
 import jwt

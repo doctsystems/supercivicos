@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'empresas',
     'reportes',
     'videos',
+    'categorias',
     
     # 'authentication',
 
@@ -184,7 +185,7 @@ ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/?verification=1'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 
 SITE_ID = 1
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # OAUTH2_PROVIDER = {
 #     # this is the list of available scopes

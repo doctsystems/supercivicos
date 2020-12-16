@@ -11,12 +11,10 @@ class Empresa(ModeloBase):
 	tipo_de_empresa = models.CharField(max_length=3, choices=tipos, default='nn')
 	nombre=models.CharField(max_length=30, unique=True)
 	telefono=models.CharField(max_length=10)
-	# email=models.EmailField(max_length=50, unique=True)
-	# password=models.CharField(max_length=80)
+	email=models.EmailField(max_length=50, unique=True)
 	logo=StdImageField(upload_to='empresas/logo/',
 		variations={'thumbnail': {"width": 240, "height": 200, "crop": True}},
 		null=True, blank=True)
-	# logo=models.ImageField(upload_to='empresas/logo64/', null=True, blank=True)
 	is_verified = models.BooleanField(default=False)
 	
 	class Meta:

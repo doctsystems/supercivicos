@@ -34,12 +34,15 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
 
+
     # My apps
     'core',
     'empresas',
     'reportes',
     'videos',
-    'categorias',
+    'rate',
+    'comments',
+    'stickers',
     
     # 'authentication',
 
@@ -91,20 +94,10 @@ WSGI_APPLICATION = 'civicos.wsgi.application'
 # DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 DATABASES = {
-    'default': config('DATABASE_URL1', cast=db_url),
+    # 'default': config('DATABASE_URL1', cast=db_url),
+    'default': config('DATABASE_URL', cast=db_url),
 }
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'civicos',
-#         'USER': 'postgres',
-#         'PASSWORD': 'diego1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
 
 # DATABASES = {
 #     'default': {

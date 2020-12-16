@@ -13,15 +13,27 @@ class ApiHome(APIView):
 		api_urls = {
 			'Api':'/api/',
 
-			'Empresa List':'/api/empresas/list',
-			'Empresa Create':'/api/empresas/create',
-			'Empresa Detail-Update':'/api/empresas/<int:pk>/edit/',
+			'Empresas List':'/api/empresas/list',
+			'Empresas Create':'/api/empresas/create',
+			'Empresas Detail-Update':'/api/empresas/<int:pk>/edit/',
 
 			'Verificacion de email':'/api/verificar-email/',
 
 			'Reportes List':'/api/reportes/list',
 			'Reportes Create':'/api/reportes/create',
 			'Reportes Detail-Update':'/api/reportes/<int:pk>/edit/',
+
+			'Comments List':'/api/comments/list',
+			'Comments Create':'/api/comments/create',
+			'Comments Detail-Update':'/api/comments/<int:pk>/edit/',
+
+			'Rates List':'/api/rates/list',
+			'Rates Create':'/api/rates/create',
+			'Rates Detail-Update':'/api/rates/<int:pk>/edit/',
+
+			'Stickers List':'/api/stickers/list',
+			'Stickers Create':'/api/stickers/create',
+			'Stickers Detail-Update':'/api/stickers/<int:pk>/edit/',
 		}
 		return Response(api_urls)
 

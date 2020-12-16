@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from .models import Categoria, Reporte
+from reportes.models import Categoria, Reporte
 from videos.models import Video
 from videos.serializers import VideoSerializer
 from drf_base64.fields import Base64FileField

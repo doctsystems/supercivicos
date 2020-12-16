@@ -23,8 +23,9 @@ class EmpresaSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model=Empresa
-		fields='__all__'
-		read_only_fields = ['estado', 'is_verified',]
+		# fields = '__all__'
+		read_only_fields = ['estado', ]
+		exclude = ['estado', 'fecha_creacion', 'fecha_modificacion', 'usuario_creacion', 'usuario_modificacion']
 
 class EmailVerificationSerializer(serializers.ModelSerializer):
 	token = serializers.CharField(max_length=555)

@@ -13,7 +13,7 @@ class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
 		
 class ReporteSerializer(GeoFeatureModelSerializer):
 	categoria = CategoriaSerializer(read_only=True)
-	categoriaId = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Categoria.objects.all(), source='categoria')
+	categoriaId = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Categoria.objects.filter(is_removed=False), source='categoria')
 	# video2 = Base64FileField(required=False)
 
 	class Meta:

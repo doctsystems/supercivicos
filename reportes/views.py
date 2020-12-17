@@ -9,16 +9,16 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class CategoriaViewSet(viewsets.ModelViewSet):
-	queryset = Categoria.objects.filter(is_active=True)
+	queryset = Categoria.objects.filter(is_removed=False)
 	serializer_class = CategoriaSerializer
 
-	def destroy(self, request, *args, **kwargs):
-		instance = self.get_object()
-		self.perform_destroy(instance)
-		return Response(status=status.HTTP_204_NO_CONTENT)
+	def perform_destroy(self, instance):
+		instance.is_removed = True
+		instance.save()
+		# instance.delete()
 
 class ReporteViewSet(viewsets.ModelViewSet):
-	queryset = Reporte.objects.filter(is_active=True)
+	queryset = Reporte.objects.filter(is_removed=False)
 	serializer_class = ReporteSerializer
 	distance_filter_field = 'location'
 	distance_filter_convert_meters = True
@@ -27,9 +27,6 @@ class ReporteViewSet(viewsets.ModelViewSet):
 	bbox_filter_include_overlapping = True
 	pagination_class = GeoJsonPagination
 
-	def create(self, request, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		serializer.is_valid(raise_exception=True)
-		self.perform_create(serializer)
-		headers = self.get_success_headers(serializer.data)
-		return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+	def perform_destroy(self, instance):
+		instance.is_removed = True
+		instance.save()

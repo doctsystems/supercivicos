@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class Categoria(ModeloBase):
 	nombre = models.CharField(default='cat_reporte', max_length=50, unique=True)
-	is_active = models.BooleanField(default=True)
+	is_removed = models.BooleanField(default=False)
 
 	class Meta:
 		ordering = ['-id']
@@ -21,9 +21,9 @@ class Reporte(ModeloBase):
 	usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 	descripcion = models.CharField(max_length=500)
 	location = models_gis.PointField(srid=4326)
-	is_active = models.BooleanField(default=True)
 	is_reported = models.BooleanField(default=True)
 	is_solved = models.BooleanField(default=False)
+	is_removed = models.BooleanField(default=False)
 
 	class Meta:
 		ordering = ['-id']

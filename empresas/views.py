@@ -17,7 +17,9 @@ class ApiHome(APIView):
 			'Empresas Create':'/api/empresas/create',
 			'Empresas Detail-Update':'/api/empresas/<int:pk>/edit/',
 
-			'Verificacion de email':'/api/verificar-email/',
+			'Categorias List':'/api/categorias/list',
+			'Categorias Create':'/api/categorias/create',
+			'Categorias Detail-Update':'/api/categorias/<int:pk>/edit/',
 
 			'Reportes List':'/api/reportes/list',
 			'Reportes Create':'/api/reportes/create',
@@ -34,9 +36,10 @@ class ApiHome(APIView):
 			'Stickers List':'/api/stickers/list',
 			'Stickers Create':'/api/stickers/create',
 			'Stickers Detail-Update':'/api/stickers/<int:pk>/edit/',
-                        
-                        'Send the authentication PIN to an email': '/authentication/getpin',
-                        'Get the access token with the PIN': '/authentication/token',
+
+			'Verificacion de email':'/api/verificar-email/',                        
+			'Send the authentication PIN to an email': '/authentication/getpin',
+			'Get the access token with the PIN': '/authentication/token',
 		}
 		return Response(api_urls)
 

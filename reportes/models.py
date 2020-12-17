@@ -17,13 +17,13 @@ class Categoria(ModeloBase):
 
 class Reporte(ModeloBase):
 	categoria = models.ForeignKey(Categoria, related_name='categorias', on_delete=models.CASCADE)
-	# video = models.ForeignKey(Video, related_name='videos', on_delete=models.CASCADE)
-	video2 = models.FileField(upload_to="reportes/videos/", blank=True, null=True)
+	video = models.FileField(upload_to="reportes/videos/", blank=True, null=True)
 	usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 	descripcion = models.CharField(max_length=500)
-
 	location = models_gis.PointField(srid=4326)
 	is_active = models.BooleanField(default=True)
+	is_reported = models.BooleanField(default=True)
+	is_solved = models.BooleanField(default=False)
 
 	class Meta:
 		ordering = ['-id']

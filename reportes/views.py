@@ -1,15 +1,24 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from reportes.serializers import ReporteSerializer
-from reportes.models import Reporte
+from reportes.serializers import ReporteSerializer, CategoriaSerializer
+from reportes.models import Reporte, Categoria
 
 from rest_framework_gis.filters import DistanceToPointFilter, DistanceToPointOrderingFilter
 from rest_framework_gis.pagination import GeoJsonPagination
 from rest_framework.response import Response
 from rest_framework import status
 
+class CategoriaViewSet(viewsets.ModelViewSet):
+	queryset = Categoria.objects.filter(is_active=True)
+	serializer_class = CategoriaSerializer
+
+	def destroy(self, request, *args, **kwargs):
+		instance = self.get_object()
+		self.perform_destroy(instance)
+		return Response(status=status.HTTP_204_NO_CONTENT)
+
 class ReporteViewSet(viewsets.ModelViewSet):
-	queryset = Reporte.objects.all()
+	queryset = Reporte.objects.filter(is_active=True)
 	serializer_class = ReporteSerializer
 	distance_filter_field = 'location'
 	distance_filter_convert_meters = True
